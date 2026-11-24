@@ -33,6 +33,8 @@ npm test
 
 Add `ANTHROPIC_API_KEY` and `DISCORD_BOT_TOKEN` to `.env.local`. The website opens at http://localhost:3000, alongside the Discord bot. Tests cover matching and conversation behavior.
 
+Limits: the website allows 8 model reads per visitor per minute, counted separately on each server instance.
+
 State is held in memory. Persistent storage, verified campus identities, and real campus activity feeds are future work.
 
 [Full example, architecture, and hackathon rubric](GUIDE.md) · [Architecture diagram](docs/architecture.svg) · [MIT license](LICENSE)

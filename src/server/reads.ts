@@ -2,6 +2,7 @@ const WINDOW_MS = 60_000;
 const PER_WINDOW = 8;
 const MAX_KEYS = 10_000;
 
+// Per server instance: on Vercel each instance keeps its own count, so this isn't a global cap.
 const reads = new Map<string, number[]>();
 
 /** Reading words calls the language model; keep it to a few reads per visitor per minute. */
