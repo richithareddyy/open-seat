@@ -28,9 +28,9 @@ export class RequestLanguage {
   ): Promise<unknown> {
     if (!this.client) throw new Error("language service unavailable");
     const response = await this.client.beta.messages.create({
-      model: process.env.ANTHROPIC_MODEL || "claude-opus-5-5",
+      model: process.env.ANTHROPIC_MODEL || "claude-haiku-5-5",
       max_tokens: 4000,
-      // If a safety filter wrongly declines a harmless message, retry on the recommended fallback model.
+      // Retries a wrongly declined message on models that support it; Haiku 5.5 doesn't, so there it falls to the rules.
       betas: ["server-side-fallback-2026-07-01"],
       fallbacks: "default",
       system,
