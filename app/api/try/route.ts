@@ -5,6 +5,7 @@ import { RequestLanguage } from "../../../src/agents/language";
 import { court } from "../../../src/seat/demo";
 import { activityLabel, trySeat } from "../../../src/seat/runtime";
 import { sameOrigin } from "../../../src/server/http";
+import { allowRead } from "../../../src/server/reads";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -25,17 +26,6 @@ const body = z.union([
   z.object({ text: z.string().trim().min(1).max(280), options: options.optional() }).strict(),
   z.object({ terms, options: options.optional(), actions: z.array(action).max(8).default([]) }).strict(),
 ]);
-
-// Reading words calls the language model; keep it to a few reads per visitor per minute.
-const reads = new Map<string, number[]>();
-function allowRead(key: string) {
-  const now = Date.now();
-  const recent = (reads.get(key) ?? []).filter((t) => now - t < 60_000);
-  if (recent.length >= 8) return false;
-  recent.push(now);
-  reads.set(key, recent);
-  return true;
-}
 
 export async function POST(request: Request) {
   if (!sameOrigin(request)) return Response.json({ error: "cross-origin requests aren't allowed" }, { status: 403 });
