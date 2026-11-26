@@ -49,6 +49,7 @@ Run `npm test` for the matching, conversation, message reading, and rate limit t
 ## Limits and privacy
 
 - The website reads 8 messages per IP address per minute, counted separately on each server instance. Discord reads 6 DMs per person per minute.
+- For each version of an activity, the engine searches only the first 12 candidates who fit. A workable arrangement involving later candidates can be missed.
 - Plans are for the same day, in Arizona time. A plan fills a group’s seats exactly and allows at most one early departure, covered by a substitute.
 - Terms and groups are held in memory, so a restart clears them. The text Claude reads goes to Anthropic’s API.
 - Persistent storage, verified campus identities, and real campus activity feeds are future work.
